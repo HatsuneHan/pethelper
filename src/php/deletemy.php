@@ -1,9 +1,8 @@
 <?php
 define('DBHOST', 'localhost');
-define('DBNAME', 'travelwebsite');
 define('DBUSER', 'hatsune');
 define('DBPASS', 'xbgd1993');
-define('DBCONNSTRING','mysql:host=localhost;dbname=travelwebsite');
+define('DBCONNSTRING','mysql:host=localhost;dbname=pethelper');
 
 $picpath = $_POST['PATH'] ;
 
@@ -13,13 +12,14 @@ try {
         $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
         $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $pdo->prepare("UPDATE travelimage SET UID = NULL WHERE PATH = :picpath ;");
+        $query = $pdo->prepare("DELETE FROM petfavor WHERE petId IN (SELECT petId FROM petinfo WHERE img = :picpath)");
         $query->bindValue(':picpath',$picpath) ;
         $query->execute() ;
 
-        $query = $pdo->prepare("DELETE FROM travelimagefavor WHERE ImageID IN (SELECT ImageID FROM travelimage WHERE PATH = :picpath)");
+        $query = $pdo->prepare("DELETE FROM petinfo WHERE img = :picpath ;");
         $query->bindValue(':picpath',$picpath) ;
         $query->execute() ;
+
 
         echo "success" ;
 

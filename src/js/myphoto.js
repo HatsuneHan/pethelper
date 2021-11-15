@@ -48,7 +48,7 @@ function getmypicinf()
 
                     if((pageid*4+i-4-1)<picpatharray.length)
                     {
-                        let imgcss = "url('../images/travel-images/normal/medium/"+picpatharray[pageid*4+i-4-1]+"')" ;
+                        let imgcss = "url('../images/petimg/"+picpatharray[pageid*4+i-4-1]+"')" ;
 
                         image.style.backgroundImage = imgcss ;
                         image.name = picpatharray[pageid*4+i-4-1] ;

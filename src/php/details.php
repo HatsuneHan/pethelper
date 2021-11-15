@@ -54,6 +54,20 @@ try {
     $tt = $query->fetchColumn() ;
     echo $tt . "&";
 
+    $query = $pdo->prepare("SELECT gender FROM petinfo WHERE img = :picpath ;");
+    $query->bindValue(':picpath',$picpath) ;
+    $query->execute() ;
+
+    $gender = $query->fetchColumn() ;
+    echo $gender . "&" ;
+
+    $query = $pdo->prepare("SELECT age FROM petinfo WHERE img = :picpath ;");
+    $query->bindValue(':picpath',$picpath) ;
+    $query->execute() ;
+
+    $age = $query->fetchColumn() ;
+    echo $age . "&";
+
     $pdo = null ;
 
 }

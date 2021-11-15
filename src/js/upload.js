@@ -1,9 +1,11 @@
-getselectele(2) ;
+getselectele(1) ;
 function getselectele(num)
 {
     let attr ;
-    if(num == 2)
-        attr = "Country" ;
+    if(num == 1)
+        attr = "Breed" ;
+    else if(num == 2)
+        attr = "City" ;
 
     $.ajax({
         url: '../php/getselectele.php',
@@ -12,7 +14,9 @@ function getselectele(num)
             ATTR: attr,
         },
         success: function (data) {
+
             let elearray = data.split("&");
+            elearray[0] = elearray[0].slice(2);
             let selectbox = document.getElementById("button"+num.toString()) ;
 
             let anoption = document.createElement("option") ;
@@ -32,18 +36,24 @@ function getselectele(num)
                 tmp = opvalue.split("+") ;
                 flag = 1 ;
             }
-            //
-            // if(num == 2)
-            // {
-            //     anoption.value = "Country" ;
-            //     anoption.innerText = "Country" ;
-            //     anoption.className = "option" ;
-            //     anoption.selected  = true ;
-            //     selectbox.appendChild(anoption) ;
-            //
-            // }
+
+            if(num == 1)
+            {
+                anoption.value = "Breed" ;
+                anoption.innerText = "品种" ;
+                anoption.className = "option" ;
+
+            }
+            else if(num == 2)
+            {
+                anoption.value = "City" ;
+                anoption.innerText = "城市" ;
+                anoption.className = "option" ;
 
 
+            }
+
+            selectbox.appendChild(anoption) ;
 
             for(let i = 0 ; i < elearray.length ; i++)
             {
@@ -74,8 +84,7 @@ function getselectele(num)
             }
             else
             {
-                update(geturlvalue("pic")) ;
-                // getCity() ;
+                getOrg() ;
             }
 
 
@@ -86,18 +95,18 @@ function getselectele(num)
         }
     });
 }
-function getCity(changecity) {
-    let sltcountry = document.getElementById("button2") ;
-    let sltcity    = document.getElementById("button3") ;
-    sltcity.innerHTML = "" ;
 
-    // alert(sltcountry.value) ;
+function getOrg() {
+    let sltcity = document.getElementById("button2") ;
+    let sltorg     = document.getElementById("button3") ;
+    sltorg.innerHTML = "" ;
+    // alert(sltcity.value) ;
     $.ajax({
         url: '../php/getselectele.php',
         type: 'POST',
         data: {
-            ATTR: "City",
-            NOW: sltcountry.value,
+            ATTR: "Org",
+            NOW: sltcity.value,
         },
         success: function (data) {
             let elearray = data.split("&");
@@ -121,11 +130,11 @@ function getCity(changecity) {
             }
 
 
-            anoption.value = "City" ;
-            anoption.innerText = "City" ;
+            anoption.value = "Org" ;
+            anoption.innerText = "机构" ;
             anoption.className = "option" ;
 
-            sltcity.appendChild(anoption) ;
+            sltorg.appendChild(anoption) ;
 
             if(tmp != "")
             {
@@ -148,28 +157,27 @@ function getCity(changecity) {
 
                     }
 
-                    sltcity.appendChild(anoption) ;
+
+
+                    sltorg.appendChild(anoption) ;
                 }
 
             }
 
-            if(changecity != "no")
+            if(geturlvalue("attr") == "Filter")
             {
-                let citybox = document.getElementById("button3") ;
-                let citylen = citybox.options.length ;
-
-                for(let i = 0 ; i < citylen ; i++)
-                {
-                    if(citybox.options[i].value == changecity)
-                    {
-                        citybox.options[i].selected = true ;
-                    }
-                    else
-                    {
-                        citybox.options[i].selected = false ;
-                    }
-                }
+                filterpic(decodeURI(geturlvalue("value"))) ;
             }
+
+            else if(geturlvalue("page"))
+            {
+                getpic(decodeURI(geturlvalue("value")),decodeURI(geturlvalue("attr"))) ;
+            }
+            else
+            {
+                getpic(null,"ALL") ;
+            }
+
 
 
         },
@@ -181,9 +189,43 @@ function getCity(changecity) {
 
 function loadpic(path)
 {
-    let imgsrc = "../images/travel-images/normal/medium/" + path ;
+    let imgsrc = "../images/petimg/" + path ;
     document.getElementById("scenery").src = imgsrc ;
     document.getElementById("nopic").style.display="none";;
+}
+
+function displayprev(path)
+{
+    $.ajax({
+        url:'../php/uploadgetselect.php',
+        data:{
+            PATH:path,
+        },
+        type:'POST',
+        success:function(data){
+            let tmp = data.split("&") ;
+            let des = tmp[0] ;
+            let name = tmp[1] ;
+            let city = tmp[2] ;
+            let gender = tmp[3] ;
+            let age = tmp[4] ;
+            let breed = tmp[5];
+            // alert(org);
+            if(des)
+                $("#searcharea").html(des) ;
+            else
+                $("#searcharea").html("No description.") ;
+
+            $("#search").val(name) ;
+            // $("#button2").val(city) ;
+            $("#button1").val(breed) ;
+            $("#genderbutton").val(gender) ;
+            $("#agebutton").val(age);
+        },
+        error:function (err) {
+            alert(err) ;
+        }
+    })
 }
 
 function changeupload()
@@ -196,6 +238,7 @@ if(geturlvalue("mode") && geturlvalue("pic"))
 {
     loadpic(geturlvalue("pic")) ;
     changeupload() ;
+    displayprev(geturlvalue("pic"));
     modifymode(geturlvalue("pic")) ;
 }
 else
@@ -281,20 +324,28 @@ function uploadmode() {
 
 function modify(picpath)
 {
-    let title = document.getElementById("search").value ;
+    let petname = document.getElementById("search").value ;
     let des = document.getElementById("searcharea").value ;
 
     let contentsel=document.getElementById("button1");
     let contentindex=contentsel.selectedIndex;
-    let content= contentsel.options[contentindex].text;
+    let breed= contentsel.options[contentindex].text;
 
     let countrysel=document.getElementById("button2");
     let countryindex=countrysel.selectedIndex;
-    let country= countrysel.options[countryindex].text;
+    let city= countrysel.options[countryindex].text;
 
     let citysel=document.getElementById("button3");
     let cityindex=citysel.selectedIndex;
-    let city= citysel.options[cityindex].text;
+    let org= citysel.options[cityindex].text;
+
+    let gendersel=document.getElementById("genderbutton");
+    let genderindex=gendersel.selectedIndex;
+    let gender= gendersel.options[genderindex].text;
+
+    let agesel=document.getElementById("agebutton");
+    let ageindex=agesel.selectedIndex;
+    let age= agesel.options[ageindex].text;
 
     // alert(title+"&"+des+"&"+country+"&"+city+"&"+content) ;
 
@@ -302,12 +353,14 @@ function modify(picpath)
         url:'../php/modify.php',
         type:'POST',
         data:{
-            PATH:picpath,
-            TITLE:title,
-            DESCRIPTION:des,
-            CONTENT:content,
-            COUNTRY:country,
-            CITY:city,
+            img:picpath,
+            petname:petname,
+            description:des,
+            breed:breed,
+            org:org,
+            city:city,
+            gendertext:gender,
+            agetext:age
         },
         success:function(data) {
 

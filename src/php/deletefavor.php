@@ -3,7 +3,7 @@ define('DBHOST', 'localhost');
 define('DBNAME', 'travelwebsite');
 define('DBUSER', 'hatsune');
 define('DBPASS', 'xbgd1993');
-define('DBCONNSTRING','mysql:host=localhost;dbname=travelwebsite');
+define('DBCONNSTRING','mysql:host=localhost;dbname=pethelper');
 
 $picpath = $_POST['PATH'] ;
 
@@ -13,7 +13,7 @@ try {
         $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
         $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $query = $pdo->prepare("SELECT FavorID FROM travelimagefavor WHERE UID IN(SELECT a.UID FROM(SELECT UID FROM traveluser WHERE UserName = :username OR Email = :username)as a) AND ImageID IN(SELECT b.ImageID FROM(SELECT ImageID FROM travelimage WHERE PATH = :picpath)as b)");
+        $query = $pdo->prepare("SELECT favorId FROM petfavor WHERE userId IN(SELECT a.UID FROM(SELECT UID FROM traveluser WHERE UserName = :username OR Email = :username)as a) AND petId IN(SELECT b.petId FROM(SELECT petId FROM petinfo WHERE img = :picpath)as b)");
         $query->bindValue(':picpath',$picpath) ;
         $query->bindValue(':username',$_SESSION['Username']) ;
         $query->execute() ;
@@ -21,7 +21,7 @@ try {
         $result = $query->fetchColumn() ;
 
         if($result):
-            $q = $pdo ->prepare("DELETE FROM travelimagefavor WHERE FavorID = :fid") ;
+            $q = $pdo ->prepare("DELETE FROM petfavor WHERE favorId = :fid") ;
             $q ->bindValue(":fid",$result) ;
             $q->execute() ;
             echo "success"  ;

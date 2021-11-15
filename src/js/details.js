@@ -52,6 +52,8 @@ function detailsinf(picpath)
             let des = tmp[3] ;
             let content = tmp[4] ;
             let title = tmp[5] ;
+            let gender = tmp[6];
+            let age = tmp[7];
             // alert(des) ;
             if(des)
                 $("#pictext").html(des) ;
@@ -59,9 +61,11 @@ function detailsinf(picpath)
                 $("#pictext").html("No description.") ;
 
             $("#fn").html(likenumber) ;
-            $("#content1").html("Breed:&nbsp"+content) ;
-            $("#content2").html("City:&nbsp"+nation) ;
-            $("#content3").html("Org:&nbsp"+city) ;
+            $("#content1").html("品种：&nbsp"+content) ;
+            $("#content2").html("城市：&nbsp"+nation) ;
+            $("#content3").html("机构：&nbsp"+city) ;
+            $("#content4").html("性别：&nbsp"+gender) ;
+            $("#content5").html("年龄：&nbsp"+age) ;
             $("#title").html(title) ;
             loadfavorbutton(geturlvalue("pic"),"not") ;
 

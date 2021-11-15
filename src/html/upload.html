@@ -96,39 +96,52 @@
                         </a>
                         <!--                    <input type="button" value="Upload" id="upload">-->
                         <br>
-                        <span>Title(no more than 255 characters):</span><br>
+                        <span>姓名:</span><br>
                         <input type="search" id="search" name = "titletext" required><br>
 
-                        <span>Description:</span><br>
+                        <span>性别:</span><br>
+                        <div class="filterbutton">
+                            <select name="gendertext" id="genderbutton">
+                                <option value="公">公</option>
+                                <option value="母">母</option>
+                            </select>
+                        </div>
+
+                        <span>年龄:</span><br>
+                        <div class="filterbutton">
+                            <select name="agetext" id="agebutton">
+                                <option value="0-6个月">0-6个月</option>
+                                <option value="6个月-2岁">6个月-2岁</option>
+                                <option value="2岁-8岁">2岁-8岁</option>
+                                <option value="8岁以上">8岁以上</option>
+                            </select>
+                        </div>
+
+                        <span>品种：</span>
+                        <div class="filterbutton">
+                            <select name="breed" id="button1">
+
+
+                            </select>
+                        </div>
+
+                        <span>城市：</span>
+                        <div class="filterbutton">
+                            <select name="city" id="button2" onChange="getOrg()">
+
+                            </select>
+                        </div>
+
+                        <span>机构：</span>
+                        <div class="filterbutton">
+                            <select name="org" id="button3">
+
+
+                            </select>
+                        </div>
+
+                        <span>描述:</span><br>
                         <textarea rows="6" cols="20" id="searcharea" name = "destext" required></textarea><br>
-
-                        <span>Content:</span>
-                        <div class="filterbutton">
-                            <select name="content" id="button1">
-                                <option value="Scenery" class="option">Scenery</option>
-                                <option value="City" class="option">City</option>
-                                <option value="People" class="option">People</option>
-                                <option value="Animal" class="option">Animal</option>
-                                <option value="Building" class="option">Building</option>
-                                <option value="Wonder" class="option">Wonder</option>
-                                <option value="Other" class="option">Other</option>
-                            </select>
-                        </div>
-
-                        <span>Country:</span>
-                        <div class="filterbutton">
-                            <select name="country" id="button2" onChange="getCity('no')">
-
-                            </select>
-                        </div>
-
-                        <span>City:</span>
-                        <div class="filterbutton">
-                            <select name="city" id="button3">
-                                <option value="City">City</option>
-
-                            </select>
-                        </div>
 
                         <input type="submit" value="Submit" class="submit" id = "submit">
                     </form>

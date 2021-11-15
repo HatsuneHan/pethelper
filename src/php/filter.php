@@ -7,7 +7,6 @@ $city = $_POST['City'] ;
 $org = $_POST['Org'] ;
 
 define('DBHOST', 'localhost');
-define('DBNAME', 'travelwebsite');
 define('DBUSER', 'hatsune');
 define('DBPASS', 'xbgd1993');
 define('DBCONNSTRING','mysql:host=localhost;dbname=pethelper');

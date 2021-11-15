@@ -1,18 +1,19 @@
 <?php
 
 define('DBHOST', 'localhost');
-define('DBNAME', 'travelwebsite');
+define('DBNAME', 'pethelper');
 define('DBUSER', 'hatsune');
 define('DBPASS', 'xbgd1993');
-define('DBCONNSTRING','mysql:host=localhost;dbname=travelwebsite');
+define('DBCONNSTRING','mysql:host=localhost;dbname=pethelper');
 
 $city=$_POST['city'];
-$country=$_POST['country'];
-$content=$_POST['content'];
-$title=$_POST['titletext'];
+$org=$_POST['org'];
+$breed=$_POST['breed'];
+$name=$_POST['titletext'];
 $description=$_POST['destext'];
-//echo $select_value ;
-
+$age=$_POST['agetext'];
+$gender=$_POST['gendertext'];
+echo $city;
 
 function random($length, $chars = '0123456789')
 {
@@ -29,7 +30,7 @@ function checkname($picpath)
     $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
     $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $query = $pdo->prepare("SELECT PATH FROM travelimage WHERE PATH = :picpath ;");
+    $query = $pdo->prepare("SELECT img FROM petinfo WHERE img = :picpath ;");
     $query->bindValue(':picpath',$picpath) ;
     $query->execute() ;
 
@@ -48,7 +49,7 @@ function checkname($picpath)
 }
 
 
-function insertpic($path,$title,$description,$content,$country,$city)
+function insertpic($path,$name,$description,$city,$breed,$org,$age,$gender)
 {
     session_start() ;
     $nowuser = $_SESSION['Username'] ;
@@ -57,29 +58,42 @@ function insertpic($path,$title,$description,$content,$country,$city)
     $pdo = new PDO(DBCONNSTRING,DBUSER,DBPASS);
     $pdo -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    if($country == "Country")
-    {
-        $countryiso = null ;
-    }
-    else
-    {
-        $querycountry = $pdo->prepare("SELECT ISO FROM geocountries WHERE CountryName = :country ;");
-        $querycountry->bindValue(':country',$country) ;
-        $querycountry->execute() ;
-        $countryiso = $querycountry->fetchColumn() ;
-    }
-
-
-    if($city == "City")
+    if($city == "城市")
     {
         $cityiso = null ;
     }
     else
     {
-        $querycity = $pdo->prepare("SELECT GeoNameID FROM geocities WHERE AsciiName = :city ;");
+        $querycity = $pdo->prepare("SELECT cityId FROM city WHERE cityName = :city ;");
         $querycity->bindValue(':city',$city) ;
         $querycity->execute() ;
         $cityiso = $querycity->fetchColumn() ;
+    }
+
+
+
+    if($org == "机构")
+    {
+        $orgiso = null ;
+    }
+    else
+    {
+        $queryorg = $pdo->prepare("SELECT orgId FROM org WHERE orgName = :org ;");
+        $queryorg->bindValue(':org',$org) ;
+        $queryorg->execute() ;
+        $orgiso = $queryorg->fetchColumn() ;
+    }
+
+    if($breed == "品种")
+    {
+        $breediso = null ;
+    }
+    else
+    {
+        $querybreed = $pdo->prepare("SELECT breedId FROM breed WHERE breedName = :breed ;");
+        $querybreed->bindValue(':breed',$breed) ;
+        $querybreed->execute() ;
+        $breediso = $querybreed->fetchColumn() ;
     }
 
     $queryuser = $pdo->prepare("SELECT UID FROM traveluser WHERE UserName = :user OR Email = :user ;");
@@ -87,32 +101,28 @@ function insertpic($path,$title,$description,$content,$country,$city)
     $queryuser->execute() ;
     $userid = $queryuser->fetchColumn() ;
 
-    $querymax = $pdo->prepare("SELECT ImageID FROM travelimage ORDER BY ImageID DESC LIMIT 1");
+    $querymax = $pdo->prepare("SELECT petId FROM petinfo ORDER BY petId DESC LIMIT 1");
     $querymax->bindValue(':user',$nowuser) ;
     $querymax->execute() ;
     $maxid = $querymax->fetchColumn() ;
-    $imageid = $maxid + 1 ;
+    $petid = $maxid + 1 ;
 
-//    echo $userid . "<br/>" ;
-//    echo $title . "<br/>" ;
-//    echo $description . "<br/>" ;
-//    echo $city. "<br/>" ;
-//    echo $country . "<br/>" ;
-//    echo $path . "<br/>" ;
-//    echo $content . "<br/>" ;
-//    echo $imageid . "<br/>" ;
-
-    $insertsql = $pdo->prepare("INSERT INTO travelimage VALUES (:imageid,:title,:description,NULL,NULL,:cityiso,:countryiso,:theuser,:path,:content) ;");
-    $insertsql->bindValue(':theuser',$userid) ;
-    $insertsql->bindValue(':title',$title) ;
+    $insertsql = $pdo->prepare("INSERT INTO petinfo VALUES (:petid,:petname,:petage,:petgender,:breedid,:orgid,:cityid,:img,:description,0,:userid) ;");
+    $insertsql->bindValue(':petid',$petid) ;
+    $insertsql->bindValue(':petname',$name) ;
+    $insertsql->bindValue(':petage',$age) ;
+    $insertsql->bindValue(':petgender',$gender) ;
+    $insertsql->bindValue(':breedid',$breediso) ;
+    $insertsql->bindValue(':orgid',$orgiso) ;
+    $insertsql->bindValue(':cityid',$cityiso) ;
+    $insertsql->bindValue(':img',$path) ;
     $insertsql->bindValue(':description',$description) ;
-    $insertsql->bindValue(':cityiso',$cityiso) ;
-    $insertsql->bindValue(':countryiso',$countryiso) ;
-    $insertsql->bindValue(':path',$path) ;
-    $insertsql->bindValue(':content',$content) ;
-    $insertsql->bindValue(':imageid',$imageid) ;
-    $insertsql->execute() ;
+    $insertsql->bindValue(':userid',$userid) ;
+    $insertsql->execute();
 
+    $test = $pdo->prepare("INSERT INTO petfavor VALUES(NULL,1,1);");
+    $test->bindValue(':city',$city) ;
+    $test->execute() ;
     $pdo = null ;
 
 }
@@ -152,9 +162,9 @@ if ((($_FILES["file"]["type"] == "image/gif")
             }
 
             move_uploaded_file($_FILES["file"]["tmp_name"],
-                "src/images/travel-images/normal/medium/" . $picpath);
+                "src/images/petimg/" . $picpath);
 
-            insertpic($picpath,$title,$description,$content,$country,$city);
+            insertpic($picpath,$name,$description,$city,$breed,$org,$age,$gender);
 
         }
     }
