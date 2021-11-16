@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b268c215-259d-495c-98ef-8c3b2e7d12b0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/html/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/html/upload.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/details.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/details.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/myfavor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/myfavor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/myphoto.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/myphoto.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/js/upload.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/upload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/deletefavor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/deletefavor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/deletemy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/deletemy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/details.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/details.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/filter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/modify.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/modify.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/myfavor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/myfavor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/myphoto.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/myphoto.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/upload.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/upload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/php/uploadgetselect.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/uploadgetselect.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/php/favor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/php/favor.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -204,6 +189,7 @@
       <workItem from="1636698371045" duration="2728000" />
       <workItem from="1636701901858" duration="11116000" />
       <workItem from="1636784215563" duration="6496000" />
+      <workItem from="1636960245886" duration="1976000" />
     </task>
     <servers />
   </component>
@@ -219,12 +205,12 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2382" y="162" key="SettingsEditor/0.0.960.500/1920.0.1920.1040@1920.0.1920.1040" timestamp="1634005626702" />
-    <state x="2248" y="154" key="com.intellij.ide.util.TipDialog" timestamp="1636784215117">
+    <state x="2248" y="154" key="com.intellij.ide.util.TipDialog" timestamp="1636960252447">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="265" y="123" key="com.intellij.ide.util.TipDialog/0.0.1549.831@0.0.1549.831" timestamp="1634712213689" />
     <state x="164" y="74" key="com.intellij.ide.util.TipDialog/0.0.960.500/1920.0.1920.1040@0.0.960.500" timestamp="1635259573822" />
-    <state x="2248" y="154" key="com.intellij.ide.util.TipDialog/0.0.960.500/1920.0.1920.1040@1920.0.1920.1040" timestamp="1636784215117" />
+    <state x="2248" y="154" key="com.intellij.ide.util.TipDialog/0.0.960.500/1920.0.1920.1040@1920.0.1920.1040" timestamp="1636960252447" />
     <state x="2546" y="229" width="672" height="678" key="search.everywhere.popup" timestamp="1636786591776">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>

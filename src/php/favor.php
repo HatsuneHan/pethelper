@@ -48,6 +48,7 @@ try {
             $q ->bindValue(":uid", $username) ;
             if($func != "check")
                 $q->execute() ;
+            echo "fail" ;
         endif;
 
 
